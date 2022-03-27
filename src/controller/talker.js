@@ -28,4 +28,8 @@ router.get('/:id', async (req, res) => {
   .catch((_err) => res.status(500).send({ message: 'erro no servidor' }));
 });
 
+// router.post('/', async (req, res) => {
+
+// });
+
 module.exports = router;
