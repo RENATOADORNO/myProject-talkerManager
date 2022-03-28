@@ -53,9 +53,25 @@ const talkerPut = async (req, res, next) => {
   return res.status(200).json({ name, age, id: +id, talk: { watchedAt, rate } });
 };
 
+const talkerDelete = async (req, res, next) => {
+  const { id } = req.params;
+
+  const talkers = await fsReader(next);
+
+  if (talkers.every((t) => t.id !== +id)) {
+    return res.status(404).json({ message: `Talker com #${id} não encontrado` });
+  }
+
+  const editedTalkets = talkers.filter((t) => t.id !== +id);
+
+  await fsWriter(editedTalkets);
+  res.status(204).end();
+};
+
 module.exports = {
   talkerGet,
   talkerByIdGet,
   talkerPost,
   talkerPut,
+  talkerDelete,
 };
