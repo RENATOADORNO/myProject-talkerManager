@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 
 const apiTalker = './talker.json';
 
-const fsReader = (next) => fs.readFile(apiTalker, 'utf8')
+const fsReader = (next) => fs.readFile(apiTalker)
     .then((data) => JSON.parse(data))
     .catch((err) => next(err));
 
