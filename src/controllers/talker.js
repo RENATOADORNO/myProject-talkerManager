@@ -68,10 +68,24 @@ const talkerDelete = async (req, res, next) => {
   res.status(204).end();
 };
 
+const talkerSearch = async (req, res, next) => {
+  const { q } = req.query;
+
+  const talkers = await fsReader(next);
+
+  if (!q) return res.status(200).json(talkers);
+
+  if (talkers.every((t) => !t.name.includes(q))) return res.status(200).json([]);
+
+  const filteredTalker = talkers.filter((t) => t.name.includes(q));
+  return res.status(200).json(filteredTalker);
+};
+
 module.exports = {
   talkerGet,
   talkerByIdGet,
   talkerPost,
   talkerPut,
   talkerDelete,
+  talkerSearch,
 };
